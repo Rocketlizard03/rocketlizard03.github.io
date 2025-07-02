@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My 90's/Win98 Style Website</title>
+  <style>
+    /* Windows 98 color scheme */
+    body {
+      background-color: #008080;
+      color: #000;
+      font-family: "MS Sans Serif", Tahoma, sans-serif;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+    }
+    /* Title bar */
+    .titlebar {
+      background-color: #000080;
+      color: #fff;
+      padding: 2px 6px;
+      font-weight: bold;
+      font-size: 12pt;
+    }
+    /* Window container */
+    .window {
+      background-color: #C0C0C0;
+      border: 2px solid #000;
+      width: 600px;
+      margin: 40px auto;
+      box-shadow: 2px 2px 0 #fff, -2px -2px 0 #000;
+    }
+    /* 3D button style */
+    .btn {
+      display: inline-block;
+      background-color: #C0C0C0;
+      border: 2px outset #fff;
+      padding: 2px 8px;
+      margin: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .btn:active {
+      border-style: inset;
+    }
+    /* Simple link style */
+    a {
+      color: #000080;
+      text-decoration: underline;
+    }
+    /* Divider HR */
+    hr.threed {
+      border: 1px solid #fff;
+      border-bottom: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">Welcome to My Retro Site</div>
+    <div style="padding: 10px;">
+      <p>This is a simple HTML page styled to look like a Windows 98 application window.</p>
+      <hr class="threed">
+      <button class="btn">OK</button>
+      <button class="btn">Cancel</button>
+      <hr class="threed">
+      <p>Check out my links:</p>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
