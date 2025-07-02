@@ -178,11 +178,11 @@
   <!-- Popup ads -->
   <div id="popup-side" class="popup-ad" style="top: 20%; left: 5%;">
     <h5>Special Offer!</h5>
-    <p>Get your free retro screensaver today!</p>
+    <p>Why do we even sell things to you?</p>
   </div>
   <div id="popup-bottom" class="popup-ad" style="bottom: 10%; left: 50%; transform: translateX(-50%);">
     <h5>Alert!</h5>
-    <p>Upgrade your vintage PC with new hardware!</p>
+    <p>We Don't Want You to Own Anything in the New World!</p>
   </div>
   <script>
     // Matrix effect
@@ -213,5 +213,37 @@
     }
     setInterval(() => { toggleAd('popup-side'); toggleAd('popup-bottom'); }, 10000);
   </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Three Hundred, Forty-Two, Ninety-Six!</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // 1) Disable right-click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // 2) Block common DevTools keys
+    document.addEventListener('keydown', function(e) {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+I, Ctrl+Shift+J
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        e.preventDefault();
+      }
+      // Ctrl+U (view-source)
+      if (e.ctrlKey && e.key === 'U') {
+        e.preventDefault();
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- …rest of your retro markup… -->
 </body>
 </html>

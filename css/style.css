@@ -1,0 +1,95 @@
+/* --- Globals --- */
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #000;
+  font-family: Verdana, sans-serif;
+  font-size: 14px;
+}
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
+
+/* --- Header --- */
+.site-header .container {
+  background: #004080;
+  padding: 10px;
+  text-align: center;
+}
+.logo {
+  display: block;
+  margin: 0 auto 5px;
+}
+.marquee {
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* --- Navigation --- */
+.site-nav {
+  background: #c0c0c0;
+}
+.nav-list {
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.nav-list li {
+  margin: 0 15px;
+}
+.nav-list a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* --- Main / Sidebar --- */
+main.container {
+  display: flex;
+  padding: 20px 0;
+}
+.posts {
+  flex: 3;
+}
+.post-list {
+  list-style: square inside;
+  padding: 0;
+}
+.post-list li {
+  margin-bottom: 8px;
+}
+.sidebar {
+  flex: 1;
+  background: #e0e0e0;
+  padding: 0 15px;
+}
+.sidebar h3 {
+  margin-top: 0;
+}
+
+/* --- Footer --- */
+.site-footer .container {
+  background: #004080;
+  color: #fff;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 0.8rem;
+}
+
+/* --- Post Template Overrides --- */
+.back-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.post-content {
+  padding: 20px 0;
+}
+.post-date {
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
