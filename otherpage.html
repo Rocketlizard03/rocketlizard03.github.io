@@ -2,62 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Three hundered, forty two, ninety six!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Three Hundred, Forty-Two, Ninety-Six!</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header with marquee and GIF -->
-  <table width="800" align="center" bgcolor="#004080" cellpadding="5">
-    <tr>
-      <td align="center">
-        <img src="https://www.animatedimages.org/data/media/61/animated-blog-image-0021.gif" 
-             alt="retro blog" width="100">
-        <marquee behavior="scroll" direction="left" scrollamount="4" style="color:#fff; font-family:Verdana;">
-          Welcome to My Space Page!
-        </marquee>
-      </td>
-    </tr>
-  </table>
+  <header class="site-header">
+    <div class="container">
+      <img src="https://www.animatedimages.org/data/media/61/animated-blog-image-0021.gif"
+           alt="retro blog" class="logo">
+      <marquee class="marquee">Welcome to My Space Page!</marquee>
+    </div>
+  </header>
 
-  <!-- Navigation -->
-  <table width="800" align="center" cellpadding="4" cellspacing="2">
-    <tr bgcolor="#c0c0c0">
-      <td><a href="index.html">Home</a></td>
-      <td><a href="#">About Me</a></td>
-      <td><a href="#">Links</a></td>
-      <td><a href="blog/post-your-first-post.html">First Post</a></td>
-    </tr>
-  </table>
+  <nav class="site-nav">
+    <ul class="nav-list container">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About Me</a></li>
+      <li><a href="#">Links</a></li>
+      <li><a href="blog/post-your-first-post.html">First Post</a></li>
+    </ul>
+  </nav>
 
-  <!-- Main content -->
-  <table width="800" align="center" cellpadding="10">
-    <tr>
-      <td valign="top" width="600">
-        <h2>Blog Posts</h2>
-        <ul class="post-list">
-          <li><a href="blog/post-your-first-post.html">My First Report! (September 20, 1995)</a></li>
-          <li><a href="blog/post-second-post.html"> The Second Report! (September 22, 1995)</a></li>
-          <li><a href="blog/post-third-post.html"> Third Report (September 24, 1995)</a></li>
-          <!-- Add more <li> as you create posts -->
-        </ul>
-      </td>
-      <!-- Sidebar for “ads” or extra info -->
-      <td valign="top" width="200" bgcolor="#e0e0e0">
-        <h3>Fake Ads</h3>
-        <p><b>Buy Now!</b><br>This space could’ve been yours!</p>
-        <hr>
-        <p><b>Old Link Exchange:</b><br><a href="#">LinkAway</a></p>
-      </td>
-    </tr>
-  </table>
+  <main class="container">
+    <section class="posts">
+      <h2>Blog Posts</h2>
+      <ul class="post-list">
+        <li><a href="blog/post-your-first-post.html">My First Report! (September 20, 1995)</a></li>
+        <li><a href="blog/post-second-post.html">The Second Report! (September 22, 1995)</a></li>
+        <li><a href="blog/post-third-post.html">Third Report (September 24, 1995)</a></li>
+      </ul>
+    </section>
 
-  <!-- Footer -->
-  <table width="800" align="center" bgcolor="#004080" cellpadding="5">
-    <tr>
-      <td align="center" style="color:#fff; font-family:Verdana; font-size:8pt;">
-        &copy; 2005–2025 My Retro Blog • All rights reserved.
-      </td>
-    </tr>
-  </table>
+    <aside class="sidebar">
+      <h3>Fake Ads</h3>
+      <p><strong>Buy Now!</strong><br>This space could’ve been yours!</p>
+      <hr>
+      <p><strong>Old Link Exchange:</strong><br><a href="#">LinkAway</a></p>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 1995 My Retro Blog • All rights reserved.
+    </div>
+  </footer>
 </body>
 </html>
