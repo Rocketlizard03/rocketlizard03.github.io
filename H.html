@@ -46,6 +46,21 @@
     .nav li {
       margin: 5px 0;
     }
+     #secret-btn {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 8px 16px;
+      font-family: "Courier New", monospace;
+      font-size: 14px;
+      color: #0f0;
+      background: #000;
+      border: 2px solid #0f0;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0;               /* start hidden */
+      transition: opacity .05s;
+     }
   </style>
 </head>
 <body>
@@ -80,5 +95,18 @@
       <!-- Continue adding links to mirror the original structure -->
     </ul>
   </div>
+   <button id="secret-btn" onclick="location.href='thepostfirstfirstpost.html'">
+    Accept The Conditions
+  </button>
+  <script>
+    (function(){
+      const btn = document.getElementById('secret-btn');
+      let visible = false;
+      setInterval(() => {
+        visible = !visible;
+        btn.style.opacity = visible ? '1' : '0';
+      }, 1000);
+    })();
+  </script>
 </body>
 </html>
