@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+     <title>Locked Link Page</title>
+  <style>
+    /* hide it by default */
+    #secret-link { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Hub</h1>
+  <p>Read the other pages first, then the link will appear below:</p>
+
+  <!-- this link is hidden until your JS “unlocks” it -->
+  <p><a id="secret-link" href="secret.html">▶ Enter Secret Page ◀</a></p>
+
+  <script>
+    // on load, check for all required flags
+    window.addEventListener('DOMContentLoaded', () => {
+      const needs = ['visited_page1', 'visited_page2']; // add as many as you like
+      const allVisited = needs.every(key => sessionStorage.getItem(key) === 'true');
+      if (allVisited) {
+        document.getElementById('secret-link').style.display = 'inline';
+      }
+    });
+  </script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
