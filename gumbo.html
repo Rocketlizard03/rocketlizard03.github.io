@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>⏱️ Await the End ⏱️</title>
+  <style>
+    /* 1. Full-screen & base reset */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; }
+    body {
+      background: #000;
+      position: relative;
+      color: #f00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 2. Scan-line overlay */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 100% 4px;
+      pointer-events: none;
+      animation: screenFlicker 0.15s steps(2) infinite;
+    }
+    @keyframes screenFlicker {
+      0%   { opacity: 0.2; }
+      50%  { opacity: 0.05; }
+      100% { opacity: 0.2; }
+    }
+
+    /* 3. Glitchy, flickering timer text */
+    #timer {
+      position: relative;
+      font-size: 8vw;
+      line-height: 1;
+      text-shadow:
+        2px 0 #f00, -2px 0 #f00,
+        0 2px #f00, 0 -2px #f00;
+      animation:
+        glitch 1s steps(2) infinite,
+        textFlicker 0.5s step-end infinite alternate;
+      z-index: 1;
+    }
+    @keyframes textFlicker {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    @keyframes glitch {
+      0% {
+        clip: rect(0, 100vw, 5vh, 0);
+        transform: translate(0,0);
+      }
+      10% {
+        clip: rect(10vh, 100vw, 15vh, 0);
+        transform: translate(-5px, -5px);
+      }
+      20% {
+        clip: rect(20vh, 100vw, 25vh, 0);
+        transform: translate(5px, 5px);
+      }
+      30% {
+        clip: rect(30vh, 100vw, 35vh, 0);
+        transform: translate(-5px, 5px);
+      }
+      40% {
+        clip: rect(40vh, 100vw, 45vh, 0);
+        transform: translate(5px, -5px);
+      }
+      50% { clip: rect(0, 100vw, 5vh, 0); }
+      100% { clip: rect(0, 100vw, 5vh, 0); }
+    }
+
+    /* 4. Subtle background shift for unease */
+    @keyframes bgShift {
+      0%   { background-position: 0 0; }
+      50%  { background-position: -200px 200px; }
+      100% { background-position: 0 0; }
+    }
+    body {
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAA/klEQVR4AY2QMQ6CMBBFv1pDh2JBm8gMwCqX5AvYBxkJMmIBytOx7efR+ZmI8j6cGd7fylKjXgMR9wGfqJZdMAIp5h+mh8DyxWlOGK8KU6NKMVvK+Bp2wlCQX1IUxPfLpYkuqJzXwwYDMJ7YAJ+1Oo9oJIypIjRKWcpL/worldJrJ2pcEwqasTv+gZgmoYShXg0XgI4ympQYHYD8AK1mgsau1r7kBIVab3Tw5vpfHDQlfnb1TZt8UrthuHseB8Q4dzuMQT30jcLefVind6fAOU3mFMLo15sAAAAASUVORK5CYII=");
+      background-size: cover;
+      animation: bgShift 15s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="timer">--:--</div>
+
+  <script>
+    (function(){
+      // 1) Prompt for seconds (default 60)
+      let secs = parseInt(prompt(
+        "⏳ Enter countdown length (seconds):", "97,759"
+      ), 10) || 60;
+
+      const el = document.getElementById("timer");
+
+      // 2) Pad helper
+      const pad = n => n.toString().padStart(2, "0");
+
+      // 3) Update display
+      function update() {
+        const m = Math.floor(secs / 60);
+        const s = secs % 60;
+        el.textContent = `${pad(m)}:${pad(s)}`;
+      }
+
+      // 4) Initial draw
+      update();
+
+      // 5) Tick down every second
+      const interval = setInterval(() => {
+        secs--;
+        if (secs < 0) {
+          clearInterval(interval);
+          // on 0, you could add extra horror:
+          el.textContent = "IT'S TOO LATE";
+          el.style.color = "#fff";
+          el.style.textShadow = "0 0 8px #f00, 0 0 16px #f00";
+          return;
+        }
+        update();
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>
