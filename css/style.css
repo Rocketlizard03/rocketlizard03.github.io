@@ -93,3 +93,17 @@ main.container {
   font-size: 0.9rem;
   color: #555;
 }
+/* --- Secret Buttons ---*/
+#secret-btn {
+  display: block;
+  margin: 2em auto;
+  padding: 8px 16px;
+  font: 14px/1 "Courier New", monospace;
+  color: rgb(187,255,0);
+  background: #000;
+  border: 2px solid rgb(0,134,0);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  animation: blink 1s steps(2,start) infinite;
+}
