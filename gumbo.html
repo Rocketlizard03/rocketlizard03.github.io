@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>⏱️ Await the End ⏱️</title>
   <style>
-    /* 1. Full-screen & base reset */
+    /* Full-screen reset */
     * { margin:0; padding:0; box-sizing:border-box; }
     html, body { width:100%; height:100%; overflow:hidden; }
     body {
@@ -18,24 +18,22 @@
       justify-content: center;
     }
 
-    /* 2. Scan-line overlay */
+    /* Scan-line overlay */
     body::before {
       content: "";
-      position: absolute;
-      inset: 0;
-      background-image: 
+      position: absolute; inset:0;
+      background-image:
         linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 100% 4px;
       pointer-events: none;
       animation: screenFlicker 0.15s steps(2) infinite;
     }
     @keyframes screenFlicker {
-      0%   { opacity: 0.2; }
-      50%  { opacity: 0.05; }
-      100% { opacity: 0.2; }
+      0%,100% { opacity:0.2; }
+      50%     { opacity:0.05; }
     }
 
-    /* 3. Glitchy, flickering timer text */
+    /* Glitchy flicker text */
     #timer {
       position: relative;
       font-size: 8vw;
@@ -50,30 +48,29 @@
       white-space: nowrap;
     }
     @keyframes textFlicker {
-      0%   { opacity: 1; }
-      50%  { opacity: 0.6; }
-      100% { opacity: 1; }
+      0%,100% { opacity:1; }
+      50%     { opacity:0.6; }
     }
     @keyframes glitch {
-      0%   { clip: rect(0, 100vw, 5vh, 0); transform: translate(0,0); }
-      10%  { clip: rect(10vh, 100vw, 15vh, 0); transform: translate(-5px,-5px); }
-      20%  { clip: rect(20vh, 100vw, 25vh, 0); transform: translate(5px,5px); }
-      30%  { clip: rect(30vh, 100vw, 35vh, 0); transform: translate(-5px,5px); }
-      40%  { clip: rect(40vh, 100vw, 45vh, 0); transform: translate(5px,-5px); }
-      50%  { clip: rect(0, 100vw, 5vh, 0); }
-      100% { clip: rect(0, 100vw, 5vh, 0); }
+      0%   { clip: rect(0,100vw,5vh,0); transform:translate(0,0); }
+      10%  { clip: rect(10vh,100vw,15vh,0); transform:translate(-5px,-5px); }
+      20%  { clip: rect(20vh,100vw,25vh,0); transform:translate(5px,5px); }
+      30%  { clip: rect(30vh,100vw,35vh,0); transform:translate(-5px,5px); }
+      40%  { clip: rect(40vh,100vw,45vh,0); transform:translate(5px,-5px); }
+      50%  { clip: rect(0,100vw,5vh,0); }
+      100% { clip: rect(0,100vw,5vh,0); }
     }
 
-    /* 4. Subtle background shift for unease */
-    @keyframes bgShift {
-      0%   { background-position: 0 0; }
-      50%  { background-position: -200px 200px; }
-      100% { background-position: 0 0; }
-    }
+    /* Subtle background shift */
     body {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAA/klEQVR4AY2QMQ6CMBBFv1pDh2JBm8gMwCqX5AvYBxkJMmIBytOx7efR+ZmI8j6cGd7fylKjXgMR9wGfqJZdMAIp5h+mh8DyxWlOGK8KU6NKMVvK+Bp2wlCQX1IUxPfLpYkuqJzXwwYDMJ7YAJ+1Oo9oJIypIjRKWcpL/worldJrJ2pcEwqasTv+gZgmoYShXg0XgI4ympQYHYD8AK1mgsau1r7kBIVab3Tw5vpfHDQlfnb1TZt8UrthuHseB8Q4dzuMQT30jcLefVind6fAOU3mFMLo15sAAAAASUVORK5CYII=");
       background-size: cover;
       animation: bgShift 15s linear infinite;
+    }
+    @keyframes bgShift {
+      0%   { background-position: 0 0; }
+      50%  { background-position: -200px 200px; }
+      100% { background-position: 0 0; }
     }
   </style>
 </head>
@@ -82,35 +79,36 @@
 
   <script>
     (function(){
-      // Target: July 4, 2025 17:00:00 UTC
-      const target = new Date(Date.UTC(2025, 6, 4, 17, 0, 0));
-      const el = document.getElementById("timer");
+      // Fixed target: July 4, 2025 at 17:00 UTC
+      const target = new Date('2025-07-04T17:00:00Z').getTime();
+      const el     = document.getElementById('timer');
 
-      function pad(n){ return n.toString().padStart(2,"0"); }
+      function pad(n){ return String(n).padStart(2,'0'); }
 
-      function update() {
-        const now = new Date();
-        let diff = Math.floor((target - now) / 1000);
+      function tick(){
+        const now  = Date.now();
+        let   diff = Math.floor((target - now) / 1000);
         if (diff <= 0) {
           clearInterval(interval);
-          el.textContent = "IT'S TOO LATE";
-          el.style.color = "#fff";
+          el.textContent      = "IT'S TOO LATE";
+          el.style.color      = "#fff";
           el.style.textShadow = "0 0 8px #f00, 0 0 16px #f00";
           return;
         }
         const days = Math.floor(diff / 86400);
         diff %= 86400;
-        const hrs = Math.floor(diff / 3600);
+        const hrs  = Math.floor(diff / 3600);
         diff %= 3600;
         const mins = Math.floor(diff / 60);
         const secs = diff % 60;
-        el.textContent = 
-          (days>0 ? days + "d " : "") +
-          pad(hrs) + "h " + pad(mins) + "m " + pad(secs) + "s";
+
+        el.textContent =
+          (days > 0 ? days + 'd ' : '') +
+          pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
       }
 
-      update();
-      const interval = setInterval(update, 1000);
+      tick();
+      const interval = setInterval(tick, 1000);
     })();
   </script>
 </body>
