@@ -47,6 +47,7 @@
         glitch 1s steps(2) infinite,
         textFlicker 0.5s step-end infinite alternate;
       z-index: 1;
+      white-space: nowrap;
     }
     @keyframes textFlicker {
       0%   { opacity: 1; }
@@ -54,27 +55,12 @@
       100% { opacity: 1; }
     }
     @keyframes glitch {
-      0% {
-        clip: rect(0, 100vw, 5vh, 0);
-        transform: translate(0,0);
-      }
-      10% {
-        clip: rect(10vh, 100vw, 15vh, 0);
-        transform: translate(-5px, -5px);
-      }
-      20% {
-        clip: rect(20vh, 100vw, 25vh, 0);
-        transform: translate(5px, 5px);
-      }
-      30% {
-        clip: rect(30vh, 100vw, 35vh, 0);
-        transform: translate(-5px, 5px);
-      }
-      40% {
-        clip: rect(40vh, 100vw, 45vh, 0);
-        transform: translate(5px, -5px);
-      }
-      50% { clip: rect(0, 100vw, 5vh, 0); }
+      0%   { clip: rect(0, 100vw, 5vh, 0); transform: translate(0,0); }
+      10%  { clip: rect(10vh, 100vw, 15vh, 0); transform: translate(-5px,-5px); }
+      20%  { clip: rect(20vh, 100vw, 25vh, 0); transform: translate(5px,5px); }
+      30%  { clip: rect(30vh, 100vw, 35vh, 0); transform: translate(-5px,5px); }
+      40%  { clip: rect(40vh, 100vw, 45vh, 0); transform: translate(5px,-5px); }
+      50%  { clip: rect(0, 100vw, 5vh, 0); }
       100% { clip: rect(0, 100vw, 5vh, 0); }
     }
 
@@ -92,43 +78,39 @@
   </style>
 </head>
 <body>
-  <div id="timer">--:--</div>
+  <div id="timer">--:--:--:--</div>
 
   <script>
     (function(){
-      // 1) Prompt for seconds (default 60)
-      let secs = parseInt(prompt(
-        "⏳ Enter countdown length (seconds):", "97,759"
-      ), 10) || 60;
-
+      // Target: July 4, 2025 17:00:00 UTC
+      const target = new Date(Date.UTC(2025, 6, 4, 17, 0, 0));
       const el = document.getElementById("timer");
 
-      // 2) Pad helper
-      const pad = n => n.toString().padStart(2, "0");
+      function pad(n){ return n.toString().padStart(2,"0"); }
 
-      // 3) Update display
       function update() {
-        const m = Math.floor(secs / 60);
-        const s = secs % 60;
-        el.textContent = `${pad(m)}:${pad(s)}`;
-      }
-
-      // 4) Initial draw
-      update();
-
-      // 5) Tick down every second
-      const interval = setInterval(() => {
-        secs--;
-        if (secs < 0) {
+        const now = new Date();
+        let diff = Math.floor((target - now) / 1000);
+        if (diff <= 0) {
           clearInterval(interval);
-          // on 0, you could add extra horror:
           el.textContent = "IT'S TOO LATE";
           el.style.color = "#fff";
           el.style.textShadow = "0 0 8px #f00, 0 0 16px #f00";
           return;
         }
-        update();
-      }, 1000);
+        const days = Math.floor(diff / 86400);
+        diff %= 86400;
+        const hrs = Math.floor(diff / 3600);
+        diff %= 3600;
+        const mins = Math.floor(diff / 60);
+        const secs = diff % 60;
+        el.textContent = 
+          (days>0 ? days + "d " : "") +
+          pad(hrs) + "h " + pad(mins) + "m " + pad(secs) + "s";
+      }
+
+      update();
+      const interval = setInterval(update, 1000);
     })();
   </script>
 </body>
