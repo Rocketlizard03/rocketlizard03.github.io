@@ -11,12 +11,12 @@
   <p>Read the other pages first, then the link will appear below:</p>
 
   <!-- this link is hidden until your JS “unlocks” it -->
-  <p><a id="" href="thekey.html">▶ Enter Secret Page ◀</a></p>
+  <p><a id="secret-link" href="thekey.html">▶ Enter Secret Page ◀</a></p>
 
   <script>
     // on load, check for all required flags
     window.addEventListener('DOMContentLoaded', () => {
-      const needs = ['visited_page1', 'visited_page2']; // add as many as you like
+      const needs = ['visited_Twelvthpost', 'visited_Seventhpost','visited_U','visited_真相', 'visited_D']; // add as many as you like
       const allVisited = needs.every(key => sessionStorage.getItem(key) === 'true');
       if (allVisited) {
         document.getElementById('secret-link').style.display = 'inline';
@@ -58,7 +58,7 @@
     </nav>
   </main>
 
-  <button id="secret-btn" onclick="location.href='postspostingposts.html'">
+  <button id="secret-btn" onclick="location.href='./postspostingposts.html'">
     Deny The Conditions
   </button>
 </body>
