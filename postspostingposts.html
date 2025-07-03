@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>But What Even is a Chud?</title>
+  <style>
+    /* reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    /* animated rainbow gradient background */
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(45deg,
+        #ff005e, #fffb00, #00ff66, #00eaff, #ff00ea);
+      background-size: 600% 600%;
+      animation: gradientBG 12s ease infinite;
+      filter: blur(4px);
+      z-index: -1;
+    }
+    @keyframes gradientBG {
+      0%   { background-position:   0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position:   0% 50%; }
+    }
+
+    /* the big text block */
+    .textblock {
+      position: relative;
+      width: 90vw;
+      max-width: 800px;
+      margin: 5vh auto;
+      padding: 2rem;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 8px;
+      color: #fff;
+      font: 1.2rem "Courier New", monospace;
+      line-height: 1.6;
+      text-align: justify;
+      animation: hueRotate 8s linear infinite, pulseScale 6s ease-in-out infinite;
+    }
+    @keyframes hueRotate {
+      0%   { filter: hue-rotate(0deg) drop-shadow(0 0 8px #fff); }
+      100% { filter: hue-rotate(360deg) drop-shadow(0 0 8px #fff); }
+    }
+    @keyframes pulseScale {
+      0%,100% { transform: scale(1); }
+      50%     { transform: scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="textblock">
+    PASTE YOUR TEXT HERE.  
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+    venenatis, nisi in fermentum consectetur, ipsum urna lacinia libero,
+    at pharetra dolor nisi quis sapien. Vivamus euismod ex non ligula
+    hendrerit, vitae porta metus condimentum. Pellentesque habitant
+    morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+    <!-- …continue your giant block of text… -->
+  </div>
+</body>
+</html>
