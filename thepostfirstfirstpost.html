@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-     <title>Locked Link Page</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Locked Link Page</title>
   <style>
-    /* hide it by default */
-    #secret-link { display: none; }
+    body { 
+      font-family: monospace; 
+      background: #000; 
+      color: #0f0; 
+      text-align: center; 
+      padding: 2rem;
+    }
+    h1, p { margin-bottom: 1rem; }
+    #secret-btn {
+      display: none;           /* hidden until unlocked */
+      padding: 0.5rem 1rem;
+      background: #000;
+      border: 2px solid #0f0;
+      color: #0f0;
+      cursor: pointer;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    #secret-btn:hover {
+      background: #0f0;
+      color: #000;
+    }
   </style>
 </head>
 <body>
   <h1>Welcome to the Hub</h1>
-  <p>Read the other pages first, then the link will appear below:</p>
+  <p>Read the other pages first, then the key will be provided:</p>
 
-  <!-- this link is hidden until your JS “unlocks” it -->
-  <p><a id="secret-link" href="thekey.html">▶ Enter Secret Page ◀</a></p>
+  <button id="secret-btn">▶ Enter Secret Page ◀</button>
 
   <script>
-    // on load, check for all required flags
-    window.addEventListener('DOMContentLoaded', () => {
-      const needs = ['visited_Twelvthpost', 'visited_Seventhpost','visited_U','visited_真相', 'visited_D']; // add as many as you like
+    document.addEventListener('DOMContentLoaded', () => {
+      const needs = [
+        'visited_Twelvthpost',
+        'visited_Seventhpost',
+        'visited_U',
+        'visited_真相',
+        'visited_D'
+      ];
       const allVisited = needs.every(key => sessionStorage.getItem(key) === 'true');
       if (allVisited) {
-        document.getElementById('secret-link').style.display = 'inline';
+        const btn = document.getElementById('secret-btn');
+        btn.style.display = 'inline-block';
+        btn.addEventListener('click', () => {
+          window.location.href = 'thekey.html';
+        });
       }
     });
   </script>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Recording Number -2</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <header class="header">
-    <marquee behavior="scroll" direction="right">
-      Chuckling Happy Undercarriage Donkey
-    </marquee>
-  </header>
-
-  <h1 class="blink">
-    WAS THERE EVER A FIRST POST WAS THERE EVER A FIRST POST…
-  </h1>
-
-  <main class="container post-content">
-    <h1>Recording Number −2</h1>
-    <p class="post-date"><em>Posted on September 10, 1995</em></p>
-    <hr>
-    <p>
-      Disturbances have been reported with a particular group of people, 
-      while a trial may take place, we already know the verdict. 
-      Seeing this to be the case, I will create a cage prepared specially 
-      for them. This Cage will be my one true masterwork...
-    </p>
-    <hr>
-    <nav class="nav">
-      <ul>
-        <li><a href="./H.html">&laquo; Back to Home</a></li>
-      </ul>
-    </nav>
-  </main>
-
-  <button id="secret-btn" onclick="location.href='./postspostingposts.html'">
-    Deny The Conditions
-  </button>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('deny-btn');
+      btn.addEventListener('click', () => {
+        // navigate to the next page
+        window.location.href = './postspostingposts.html';
+      });
+    });
+  </script>
 </body>
 </html>
