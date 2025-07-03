@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Three Hundred, Forty-Two, Ninety-Six!</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* hide secret button until unlocked */
+    #secret-btn {
+      display: none;
+      margin: 20px auto;
+      padding: 8px 16px;
+      font-family: monospace;
+      font-size: 14px;
+      color: #0f0;
+      background: #000;
+      border: 2px solid #0f0;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    #secret-btn:hover {
+      background: #0f0;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -47,5 +66,28 @@
       &copy; 1995 • All rights reserved.
     </div>
   </footer>
+
+  <!-- SECRET BUTTON (hidden until unlocked) -->
+  <button id="secret-btn">▶ Enter the Secret Page ◀</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // List here the sessionStorage keys you set on each prerequisite page:
+      const needs = [
+        'visited_thepostfirstfirstpost',
+        'visited_postspostingposts'
+      ];
+
+      // Check if all flags are present
+      const unlocked = needs.every(key => sessionStorage.getItem(key) === 'true');
+      if (unlocked) {
+        const btn = document.getElementById('secret-btn');
+        btn.style.display = 'inline-block';
+        btn.addEventListener('click', () => {
+          window.location.href = 'secret.html';
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -50,19 +50,13 @@
         const btn = document.getElementById('secret-btn');
         btn.style.display = 'inline-block';
         btn.addEventListener('click', () => {
-          window.location.href = 'thekey.html';
+          window.location.href = 'postspostingposts.html';
         });
       }
     });
   </script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('deny-btn');
-      btn.addEventListener('click', () => {
-        // navigate to the next page
-        window.location.href = './postspostingposts.html';
-      });
-    });
+    sessionStorage.setItem('visited_thepostfirstfirstpost', true)
   </script>
 </body>
 </html>
