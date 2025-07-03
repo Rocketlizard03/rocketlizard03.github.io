@@ -5,6 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Post Title Here</title>
   <link rel="stylesheet" href="../css/style.css">
+     <style>
+    /* Early-2000s / Windows-98 aesthetic */
+    body {
+      background-color: #000;
+      color: rgb(174, 0, 255);
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      margin: 0;
+      padding: 20px;
+    }
+    a {
+      color: rgb(0, 136, 136);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .header {
+      background-color: #004080;
+      padding: 10px;
+      text-align: center;
+      border: 2px solid #fff;
+    }
+    .header marquee {
+      font-size: 1.2em;
+    }
+    .content pre {
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+    .blink {
+      animation: blink-animation 1s steps(2, start) infinite;
+    }
+    @keyframes blink-animation {
+      to { visibility: hidden; }
+    }
+    .nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    .nav li {
+      margin: 5px 0;
+    }
+     #secret-btn {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 8px 16px;
+      font-family: "Courier New", monospace;
+      font-size: 14px;
+      color: rgb(187, 255, 0);
+      background: #000;
+      border: 2px solid rgb(0, 134, 0);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0;               /* start hidden */
+      transition: opacity .05s;
+     }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -24,5 +83,28 @@
     <hr>
     <p><a href="./H.html">&laquo; Back to Home</a></p>
   </main>
+   <button id="secret-btn" onclick="location.href='postspostingposts.html'">
+    Deny The Conditions
+  </button>
+  <script>
+    (function(){
+      const btn = document.getElementById('secret-btn');
+      let visible = false;
+      setInterval(() => {
+        visible = !visible;
+        btn.style.opacity = visible ? '1' : '0';
+      }, 1000);
+    })();
+  </script>
 </body>
+<div class="header">
+    <marquee behavior="scroll" direction="right">
+      Chuckling Happy Undercarriage Donkey
+    </marquee>
+  </div>
+  <h1>
+    <span class="blink">
+      WAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POSTWAS THERE EVER A FIRST POST
+    </span>
+  </h1>
 </html>
