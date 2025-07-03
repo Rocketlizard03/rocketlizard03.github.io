@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Await Further Instructions</title>
+  <style>
+    /* full-screen reset */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; }
+
+    /* Background: very dark with a slow, subtle red wash */
+    body {
+      background: #000;
+      background: radial-gradient(circle at center, #110000, #000 70%);
+      animation: bgPulse 10s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes bgPulse {
+      0%,100% { background-position: center; }
+      50%     { background-position: 10% 10%; }
+    }
+
+    /* Main text styling */
+    .glitch {
+      position: relative;
+      font: bold 8vw "Courier New", monospace;
+      color: #0f0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow:
+        0 0 8px #0f0,
+        0 0 16px rgba(0,255,0,0.5),
+        0 0 24px rgba(0,255,0,0.3);
+      animation:
+        flicker 3s linear infinite,
+        glitchShift 0.4s linear infinite alternate-reverse;
+    }
+
+    /* Flicker opacity */
+    @keyframes flicker {
+      0%,18%,22%,25%,53%,57%,100% { opacity:1; }
+      20%,24%,55%                { opacity:0; }
+    }
+
+    /* Slight positional/skew glitch */
+    @keyframes glitchShift {
+      0%   { transform: translate(0,0) skew(0); }
+      20%  { transform: translate(-2px,  2px) skew(-1deg); }
+      40%  { transform: translate(-2px, -2px) skew(1deg); }
+      60%  { transform: translate(2px,   2px) skew(0); }
+      80%  { transform: translate(2px,  -2px) skew(-1deg); }
+      100% { transform: translate(0,     0) skew(0); }
+    }
+
+    /* Subtle zoom-in for tension */
+    .container {
+      animation: zoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes zoom {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="glitch">AWAIT FURTHER INSTRUCTIONS</div>
+  </div>
+</body>
+</html>
