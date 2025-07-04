@@ -61,6 +61,26 @@
       100% { clip: rect(0,100vw,5vh,0); }
     }
 
+    /* Continue button */
+    #continue-btn {
+      position: absolute;
+      bottom: 10vh;
+      padding: 1em 2em;
+      font-size: 1.5vw;
+      background: #f00;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+    #continue-btn.visible {
+      opacity: 1;
+    }
+
     /* Subtle background shift */
     body {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAA/klEQVR4AY2QMQ6CMBBFv1pDh2JBm8gMwCqX5AvYBxkJMmIBytOx7efR+ZmI8j6cGd7fylKjXgMR9wGfqJZdMAIp5h+mh8DyxWlOGK8KU6NKMVvK+Bp2wlCQX1IUxPfLpYkuqJzXwwYDMJ7YAJ+1Oo9oJIypIjRKWcpL/worldJrJ2pcEwqasTv+gZgmoYShXg0XgI4ympQYHYD8AK1mgsau1r7kBIVab3Tw5vpfHDQlfnb1TZt8UrthuHseB8Q4dzuMQT30jcLefVind6fAOU3mFMLo15sAAAAASUVORK5CYII=");
@@ -76,12 +96,14 @@
 </head>
 <body>
   <div id="timer">--:--:--:--</div>
+  <button id="continue-btn">Proceed</button>
 
   <script>
     (function(){
       // Fixed target: July 4, 2025 at 17:00 UTC
       const target = new Date('2025-07-04T17:00:00Z').getTime();
       const el     = document.getElementById('timer');
+      const btn    = document.getElementById('continue-btn');
 
       function pad(n){ return String(n).padStart(2,'0'); }
 
@@ -90,9 +112,12 @@
         let   diff = Math.floor((target - now) / 1000);
         if (diff <= 0) {
           clearInterval(interval);
-          el.textContent      = "IT'S TOO LATE";
+          el.textContent      = "IT'S TOO LATE, THE CAGE IS READY";
           el.style.color      = "#fff";
           el.style.textShadow = "0 0 8px #f00, 0 0 16px #f00";
+          // Show button
+          btn.classList.add('visible');
+          btn.onclick = () => window.location.href = 'howtoenteracage.html';
           return;
         }
         const days = Math.floor(diff / 86400);
