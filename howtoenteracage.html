@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>👁️ Watch Closely 👁️</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body {
+      background: #000;
+      color: #f00;
+      font-family: 'Courier New', monospace;
+      position: relative;
+    }
+
+    /* Harsh CRT Scanlines & Flicker */
+    body::before {
+      content: '';
+      position: absolute; inset: 0;
+      /* Thicker, more opaque lines */
+      background: repeating-linear-gradient(
+        rgba(255,255,255,0.15) 0 2px,
+        transparent 2px 6px
+      );
+      pointer-events: none;
+      /* Faster, intense flicker */
+      animation: flicker 0.1s steps(3) infinite;
+      z-index: 1;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 0.1; }
+      25%      { opacity: 0.6; }
+      50%      { opacity: 0.2; }
+      75%      { opacity: 0.8; }
+    }
+
+    /* Static noise overlay */
+    body::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://example.com/static-noise.gif') center/cover;
+      opacity: 0.1;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Cracked Screen Overlay */
+    #crack-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      background: url('https://example.com/cracked-screen.png') center/cover no-repeat;
+      mix-blend-mode: multiply;
+      z-index: 3;
+    }
+
+    /* Content & Media Layout */
+    .container {
+      position: relative;
+      z-index: 6;
+      width: 100%; height: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+    .container h1,
+    .container p {
+      position: relative;
+      z-index: 7;
+    }
+    .container h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    .container p {
+      font-size: 1.2rem;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    .media {
+      position: absolute;
+      width: 40vw;
+      height: auto;
+      opacity: 0.85;
+      z-index: 5;
+    }
+    #img1 { top: 10%; left: 5%; transform: rotate(-5deg); }
+    #img2 { top: 25%; left: 20%; transform: rotate(3deg); }
+    #img3 { top: 40%; left: 50%; transform: rotate(-8deg); }
+    #img4 { top: 60%; left: 30%; transform: rotate(6deg); }
+
+    /* Strange Buttons */
+    button {
+      position: absolute;
+      background: transparent;
+      border: 1px solid #f00;
+      color: #f00;
+      padding: 4px 8px;
+      font-size: 0.9rem;
+      font-family: 'Courier New', monospace;
+      cursor: pointer;
+      z-index: 7;
+    }
+    #btn1 { top: 10%; left: 80%; transform: rotate(-10deg); }
+    #btn2 { top: 70%; left: 5%; transform: rotate(15deg); }
+    #btn3 { top: 45%; left: 50%; transform: rotate(-25deg); }
+    /* Hidden Until Hover Button */
+    #btn4 {
+      top: 85%; left: 90%; transform: rotate(30deg);
+      background: #000; border: 1px solid #000; color: #000;
+      padding: 4px 8px;
+      font-size: 0.9rem;
+      z-index: 7;
+    }
+    #btn4:hover {
+      background: transparent; border-color: #f00; color: #f00;
+    }
+  </style>
+</head>
+<body>
+  <div id="crack-overlay"></div>
+  <div class="container">
+    <h1>IS IT HERE?</h1>
+    <p>How does one enter a cage?</p>
+    <img id="img1" class="media" src="images/slaves.gif" alt="Workforces">
+    <img id="img2" class="media" src="images/crafts.jpg" alt="Image Captured over 19">
+    <img id="img3" class="media" src="images/work.gif" alt="Work">
+    <img id="img4" class="media" src="images/home.jpg" alt="Home">
+  </div>
+
+  <button id="btn1" onclick="location.href='thekey.html'">A KEY</button>
+  <button id="btn2" onclick="location.href='acode.html'">A CODE</button>
+  <button id="btn3" onclick="location.href='areason.html'">A REASON</button>
+  <button id="btn4" onclick="location.href='secret.html'">ENTER</button>
+
+  // Launch Areas:82.8628° S, 135.0000° E ensure these places have maximum population density. The Leopold Corporation Will Handle the Rest. //
+  
+</body>
+</html>

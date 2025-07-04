@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>~ Interconnected Between Many Mouths ~</title>
+  <style>
+    /* Base & Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body {
+      /* Tiled eyes background */
+      background: url("images/odd2.jpg") repeat;
+      font-family: 'Courier New', monospace;
+      position: relative;
+      color: #f00;
+    }
+
+    /* Color Overlay for added hues */
+    .color-overlay {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      background: linear-gradient(45deg, rgba(255,0,0,0.2), rgba(0,255,0,0.2), rgba(0,0,255,0.2));
+      mix-blend-mode: screen;
+      z-index: 2;
+    }
+
+    /* Random Hue Shift */
+    @keyframes hueShift { 0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(180deg); } 100% { filter: hue-rotate(360deg); } }
+    .hue { animation: hueShift 5s infinite linear; }
+
+    /* Jitter Movement */
+    @keyframes jitter { 0% { transform: translate(0,0); } 25% { transform: translate(2px,-2px); } 50% { transform: translate(-2px,2px); } 75% { transform: translate(2px,2px); } 100% { transform: translate(-2px,-2px); } }
+    .jitter { animation: jitter 0.3s infinite; }
+
+    /* Glitch Slice */
+    @keyframes slice { 0%,100% { clip: rect(0,200px,0,0); } 20% { clip: rect(100px,400px,150px,0); } 40% { clip: rect(50px,300px,100px,0); } 60% { clip: rect(150px,500px,200px,0); } 80% { clip: rect(0,600px,50px,0); } }
+    .glitch { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: slice 2s infinite; mix-blend-mode: difference; opacity: 0.25; pointer-events: none; z-index: 3; }
+
+    /* White Flash Overlay */
+    #flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; opacity: 0; pointer-events: none; z-index: 4; transition: opacity 0.07s ease; }
+
+    /* Invert Glitch */
+    .invert { filter: invert(1) contrast(3) brightness(1.2); }
+
+    /* Spread Images with stronger presence */
+    .media { position: absolute; width: 35vw; height: auto; opacity: 0.9; animation: imgJitter 3s infinite; }
+    @keyframes imgJitter { 0% { transform: translate(0,0); } 50% { transform: translate(3px,3px) rotate(1deg); } 100% { transform: translate(0,0); } }
+    #m1 { top: 5%; left: 10%; }
+    #m2 { top: 20%; left: 60%; }
+    #m3 { top: 50%; left: 15%; }
+    #m4 { top: 60%; left: 70%; }
+    #m5 { top: 30%; left: 35%; }
+    #m6 { top: 75%; left: 40%; }
+
+    /* Rambling Text with Wave & Color blocks */
+    .ramble {
+      position: absolute; width: 40vw; font-size: 1rem; line-height: 1.4;
+      opacity: 0.9; animation: textWave 5s infinite;
+      background: rgba(0,0,0,0.5); padding: 10px; border: 1px solid #f00;
+    }
+    @keyframes textWave { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    #t1 { top: 10%; left: 45%; }
+    #t2 { top: 40%; left: 5%; }
+    #t3 { top: 65%; left: 55%; }
+    #t4 { top: 80%; left: 15%; }
+
+    /* Occasional Page Shake */
+    @keyframes pageShake { 0% { transform: translate(0,0); } 20% { transform: translate(6px,0); } 40% { transform: translate(0,6px); } 60% { transform: translate(-6px,0); } 80% { transform: translate(0,-6px); } 100% { transform: translate(0,0); } }
+    body.shake { animation: pageShake 0.6s ease-in-out; }
+  </style>
+</head>
+<body class="hue jitter">
+  <!-- Color and Glitch Layers -->
+  <div class="color-overlay"></div>
+  <div class="glitch"></div>
+  <div id="flash"></div>
+
+  <!-- Scattered Images -->
+  <img id="m1" class="media" src="images/odd1.jpg" alt="">
+  <img id="m2" class="media" src="images/odd2.gif" alt="">
+  <img id="m3" class="media" src="images/odd3.png" alt="">
+  <img id="m4" class="media" src="images/odd4.jpg" alt="">
+  <img id="m5" class="media" src="images/odd5.gif" alt="">
+  <img id="m6" class="media" src="images/odd6.png" alt="">
+
+  <!-- Rambling Text Fragments -->
+  <div id="t1" class="ramble jitter">What the hell is Rainer doing!</div>
+  <div id="t2" class="ramble hue">There is no way they have deemed this a fit way to study them.</div>
+  <div id="t3" class="ramble jitter">This is a punishment, our sins manifest in their blood.</div>
+  <div id="t4" class="ramble hue">May God, if he even looks our way anymore, have mercy on us all.</div>
+
+  <script>
+    // Random page shake
+    setInterval(() => {
+      document.body.classList.add('shake');
+      setTimeout(() => document.body.classList.remove('shake'), 600);
+    }, 4000 + Math.random()*4000);
+
+    // Random white flashes
+    setInterval(() => {
+      const f = document.getElementById('flash');
+      f.style.opacity = 0.8;
+      setTimeout(() => f.style.opacity = 0, 80);
+    }, 2000 + Math.random()*3000);
+
+    // Random invert glitch
+    setInterval(() => {
+      document.body.classList.add('invert');
+      setTimeout(() => document.body.classList.remove('invert'), 150);
+    }, 6000 + Math.random()*5000);
+  </script>
+
+//* someone deems it fit to look where they shouldn't, these halls are sacred don't you know. Were it up to me I would gut you like the spineless fish you are *//
+</body>
+</html>
