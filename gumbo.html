@@ -5,136 +5,51 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>⏱️ Await the End ⏱️</title>
   <style>
-    /* Full-screen reset */
+    /* Full-screen black background with subtle flicker */
     * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { width:100%; height:100%; overflow:hidden; }
-    body {
-      background: #000;
-      position: relative;
-      color: #f00;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Scan-line overlay */
+    html, body { width:100%; height:100%; overflow:hidden; background:#000; position:relative; }
     body::before {
-      content: "";
-      position: absolute; inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 100% 4px;
-      pointer-events: none;
+      content:""; position:absolute; inset:0;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size:100% 4px; pointer-events:none;
       animation: screenFlicker 0.15s steps(2) infinite;
     }
     @keyframes screenFlicker {
-      0%,100% { opacity:0.2; }
-      50%     { opacity:0.05; }
+      0%,100% { opacity:0.2; } 50% { opacity:0.05; }
     }
 
-    /* Glitchy flicker text */
-    #timer {
-      position: relative;
-      font-size: 8vw;
-      line-height: 1;
-      text-shadow:
-        2px 0 #f00, -2px 0 #f00,
-        0 2px #f00, 0 -2px #f00;
-      animation:
-        glitch 1s steps(2) infinite,
-        textFlicker 0.5s step-end infinite alternate;
-      z-index: 1;
-      white-space: nowrap;
+    /* Centered glitchy button */
+    #creepy-btn {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      padding:1em 2em;
+      font-family:'Courier New', monospace;
+      font-size:6vw; color:#f00; background:transparent; border:2px solid #f00;
+      text-transform:uppercase; letter-spacing:0.1em;
+      cursor:pointer; mix-blend-mode: difference;
+      animation: glitch 1s steps(2) infinite, textFlicker 0.5s step-end infinite alternate;
+      z-index:1;
     }
     @keyframes textFlicker {
-      0%,100% { opacity:1; }
-      50%     { opacity:0.6; }
+      0%,100% { opacity:1; } 50% { opacity:0.6; }
     }
     @keyframes glitch {
-      0%   { clip: rect(0,100vw,5vh,0); transform:translate(0,0); }
-      10%  { clip: rect(10vh,100vw,15vh,0); transform:translate(-5px,-5px); }
-      20%  { clip: rect(20vh,100vw,25vh,0); transform:translate(5px,5px); }
-      30%  { clip: rect(30vh,100vw,35vh,0); transform:translate(-5px,5px); }
-      40%  { clip: rect(40vh,100vw,45vh,0); transform:translate(5px,-5px); }
-      50%  { clip: rect(0,100vw,5vh,0); }
-      100% { clip: rect(0,100vw,5vh,0); }
-    }
-
-    /* Continue button */
-    #continue-btn {
-      position: absolute;
-      bottom: 10vh;
-      padding: 1em 2em;
-      font-size: 1.5vw;
-      background: #f00;
-      color: #000;
-      border: none;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      z-index: 2;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-    }
-    #continue-btn.visible {
-      opacity: 1;
-    }
-
-    /* Subtle background shift */
-    body {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAA/klEQVR4AY2QMQ6CMBBFv1pDh2JBm8gMwCqX5AvYBxkJMmIBytOx7efR+ZmI8j6cGd7fylKjXgMR9wGfqJZdMAIp5h+mh8DyxWlOGK8KU6NKMVvK+Bp2wlCQX1IUxPfLpYkuqJzXwwYDMJ7YAJ+1Oo9oJIypIjRKWcpL/worldJrJ2pcEwqasTv+gZgmoYShXg0XgI4ympQYHYD8AK1mgsau1r7kBIVab3Tw5vpfHDQlfnb1TZt8UrthuHseB8Q4dzuMQT30jcLefVind6fAOU3mFMLo15sAAAAASUVORK5CYII=");
-      background-size: cover;
-      animation: bgShift 15s linear infinite;
-    }
-    @keyframes bgShift {
-      0%   { background-position: 0 0; }
-      50%  { background-position: -200px 200px; }
-      100% { background-position: 0 0; }
+      0%   { clip:rect(0,100%,5%,0); transform:translate(0,0); }
+      10%  { clip:rect(10%,100%,15%,0); transform:translate(-5px,-5px); }
+      20%  { clip:rect(20%,100%,25%,0); transform:translate(5px,5px); }
+      30%  { clip:rect(30%,100%,35%,0); transform:translate(-5px,5px); }
+      40%  { clip:rect(40%,100%,45%,0); transform:translate(5px,-5px); }
+      50%  { clip:rect(0,100%,5%,0); }
+      100% { clip:rect(0,100%,5%,0); }
     }
   </style>
 </head>
 <body>
-  <div id="timer">--:--:--:--</div>
-  <button id="continue-btn">Proceed</button>
-
+  <button id="creepy-btn">Proceed</button>
   <script>
-    (function(){
-      // Fixed target: July 4, 2025 at 17:00 UTC
-      const target = new Date('2025-07-04T17:00:00Z').getTime();
-      const el     = document.getElementById('timer');
-      const btn    = document.getElementById('continue-btn');
-
-      function pad(n){ return String(n).padStart(2,'0'); }
-
-      function tick(){
-        const now  = Date.now();
-        let   diff = Math.floor((target - now) / 1000);
-        if (diff <= 0) {
-          clearInterval(interval);
-          el.textContent      = "IT'S TOO LATE, THE CAGE IS READY";
-          el.style.color      = "#fff";
-          el.style.textShadow = "0 0 8px #f00, 0 0 16px #f00";
-          // Show button
-          btn.classList.add('visible');
-          btn.onclick = () => window.location.href = 'howtoenteracage.html';
-          return;
-        }
-        const days = Math.floor(diff / 86400);
-        diff %= 86400;
-        const hrs  = Math.floor(diff / 3600);
-        diff %= 3600;
-        const mins = Math.floor(diff / 60);
-        const secs = diff % 60;
-
-        el.textContent =
-          (days > 0 ? days + 'd ' : '') +
-          pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
-      }
-
-      tick();
-      const interval = setInterval(tick, 1000);
-    })();
+    document.getElementById('creepy-btn').addEventListener('click', () => {
+      // Change this to the page you want to show next:
+      window.location.href = "howtoenteracage.html";
+    });
   </script>
 </body>
 </html>
