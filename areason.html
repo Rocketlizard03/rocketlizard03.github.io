@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🔮 Visions of the Cage 🔮</title>
+  <style>
+    /* Base & Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: url("images/odd2.jpg") repeat center center;
+      color: #fff; font-family: 'Courier New', monospace;
+    }
+
+    /* Rainbow Hue Shift */
+    @keyframes hueShift { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+    body { animation: hueShift 10s infinite linear; }
+
+    /* Jitter Shake */
+    @keyframes shake { 0% { transform: translate(0,0); } 25% { transform: translate(5px,-5px); } 50% { transform: translate(-5px,5px); } 75% { transform: translate(5px,5px); } 100% { transform: translate(0,0); } }
+    .shake { animation: shake 0.3s infinite; }
+
+    /* Glitch Overlay */
+    .glitch { position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.05) url('images/glitch1.gif') repeat;
+      mix-blend-mode: difference; pointer-events: none; z-index: 10;
+    }
+
+    /* Conspiratorial Text */
+    .pop-up {
+      position: absolute; font-weight: bold; text-transform: uppercase;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      z-index: 20; white-space: nowrap; background: transparent; border: none;
+    }
+
+    /* Random Eye Images */
+    .media {
+      position: absolute; max-width: 25vw; opacity: 0.8;
+      mix-blend-mode: screen; animation: shake 2s infinite ease-in-out;
+    }
+    #eye1 { top: 10%; left: 5%; transform: rotate(-15deg); }
+    #eye2 { top: 30%; left: 60%; transform: rotate(10deg); }
+    #eye3 { top: 55%; left: 30%; transform: rotate(-8deg); }
+  </style>
+</head>
+<body class="shake">
+  <!-- Offputting audio -->
+  <audio autoplay loop src="audio/ambient.mp3"></audio>
+
+  <!-- Glitch overlay -->
+  <div class="glitch"></div>
+
+  <!-- Drifting eye images -->
+  <img id="eye1" class="media" src="images/eye1.png" alt="Looking At You">
+  <img id="eye2" class="media" src="images/eye2.gif" alt="Seeing Your Soul">
+  <img id="eye3" class="media" src="images/eye3.png" alt="This Is Your Sin">
+
+  <!-- Conspiratorial pop-up texts -->
+  <div class="pop-up">THE GATES OF AGARTHA</div>
+  <div class="pop-up">GOD’S EYE WATCHES</div>
+  <div class="pop-up">DIVINE PUNISHMENT LOOMS</div>
+  <div class="pop-up">SECRET SOULS HAVE FALLEN</div>
+  <div class="pop-up">TASTE ETERNITY</div>
+
+  <script>
+    const popUps = document.querySelectorAll('.pop-up');
+    function randomPop() {
+      const el = popUps[Math.floor(Math.random() * popUps.length)];
+      // Random size between 6vw and 12vw for readability
+      el.style.fontSize = (6 + Math.random() * 6) + 'vw';
+      // Random position
+      el.style.left = Math.random() * 90 + 'vw';
+      el.style.top  = Math.random() * 90 + 'vh';
+      el.style.opacity = 1;
+      setTimeout(() => { el.style.opacity = 0; }, 500 + Math.random() * 1500);
+      setTimeout(randomPop, 800 + Math.random() * 2000);
+    }
+    window.onload = randomPop;
+  </script>
+  <script>
+    sessionStorage.setItem('visited_areason', true)
+  </script>
+</body>
+</html>

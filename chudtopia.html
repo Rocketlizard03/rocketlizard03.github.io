@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>⏳ YOUR BANISHMENT BEGINS ⏳</title>
+  <style>
+    body { display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #111; color: #0f0; font-family: 'Courier New', monospace; text-align: center; }
+    #timer { font-size: 4rem; }
+    #message { font-size: 2rem; display: none; }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="timer"></div>
+    <div id="message">🔔 YOUR BANISHMENT BEGINS 🔔</div>
+  </div>
+
+  <script>
+    // Universal countdown to July 9, 2025 at 00:00 UTC
+    const target = new Date('2025-07-09T00:00:00Z').getTime();
+    const timerEl = document.getElementById('timer');
+    const messageEl = document.getElementById('message');
+
+    function updateCountdown() {
+      const now = Date.now();
+      let diff = target - now;
+      if (diff <= 0) {
+        clearInterval(interval);
+        timerEl.style.display = 'none';
+        messageEl.style.display = 'block';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff %= (1000 * 60 * 60 * 24);
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+      diff %= (1000 * 60 * 60);
+      const minutes = String(Math.floor(diff / (1000 * 60))).padStart(2, '0');
+      diff %= (1000 * 60);
+      const seconds = String(Math.floor(diff / 1000)).padStart(2, '0');
+      timerEl.textContent = `${days} days ${hours}:${minutes}:${seconds}`;
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
+

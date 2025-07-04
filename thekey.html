@@ -72,5 +72,26 @@
   <div class="container">
     <div class="glitch">AWAIT FURTHER INSTRUCTIONS</div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // List here the sessionStorage keys you set on each prerequisite page:
+      const needs = [
+        'visited_lock',
+        'visited_acode',
+        'visited_areason',
+        'visited_cage'
+      ];
+
+      // Check if all flags are present
+      const unlocked = needs.every(key => sessionStorage.getItem(key) === 'true');
+      if (unlocked) {
+        const btn = document.getElementById('secret-btn');
+        btn.style.display = 'inline-block';
+        btn.addEventListener('click', () => {
+          window.location.href = 'thefirstpost.html';
+        });
+      }
+    });
+  </script>
 </body>
 </html>
