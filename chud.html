@@ -52,7 +52,7 @@
       z-index: 2;
       width: 120px;
       height: 140px;
-      transform: translate(-50%, -50%) translateZ(-1400px) scale(0.08);
+      transform: translate(-50%, -50%) scale(0.01);
       opacity: 0;
       text-decoration: none;
       color: #111;
@@ -142,6 +142,7 @@
       class="background-video"
       src="krab.mp4"
       autoplay
+      controls
       playsinline
     ></video>
 
@@ -170,10 +171,13 @@
     const downloadText = document.getElementById("downloadText");
     const fallbackMessage = document.getElementById("fallbackMessage");
 
-    // Adjust these to control when the file icon appears.
+    // Adjust these to control when the file icon approaches the viewer.
     // 0.0 = start of video, 1.0 = end of video.
-    const appearStart = 0.38;
-    const fullyVisibleAt = 0.72;
+    const appearStart = 0.02;
+    const fullyVisibleAt = 0.96;
+
+    // Final size. Increase this if it still feels smaller than the sandwich.
+    const finalScale = 4.8;
 
     function clamp(value, min, max) {
       return Math.min(Math.max(value, min), max);
@@ -189,17 +193,16 @@
         1
       );
 
-      // Smooth the movement so it feels like it is approaching from far away.
-      const eased = 1 - Math.pow(1 - entranceProgress, 3);
+      // Use a slower easing curve so the icon starts extremely small,
+      // then creeps forward before becoming very large near the viewer.
+      const eased = Math.pow(entranceProgress, 2.2);
 
-      // The icon begins tiny in the center, far back in 3D space,
-      // then slowly moves toward the viewer until it reaches full size.
-      const scale = 0.08 + eased * 0.92;
-      const depth = -1400 + eased * 1400;
-      const opacity = clamp(entranceProgress * 1.4, 0, 1);
+      const startScale = 0.01;
+      const scale = startScale + eased * (finalScale - startScale);
+      const opacity = clamp(entranceProgress * 2.2, 0, 1);
 
       downloadIcon.style.opacity = opacity;
-      downloadIcon.style.transform = `translate(-50%, -50%) translateZ(${depth}px) scale(${scale})`;
+      downloadIcon.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
       if (progress >= fullyVisibleAt) {
         downloadText.classList.add("visible");
