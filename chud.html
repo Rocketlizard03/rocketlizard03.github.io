@@ -75,7 +75,7 @@
     .download-text {
       position: absolute;
       left: 50%;
-      top: calc(50% + 180px);;
+      top: calc(50% + 180px);
       z-index: 3;
       transform: translateX(-50%);
       color: white;
@@ -165,7 +165,7 @@
     <div id="fallbackMessage" class="fallback-message">Click Start to play with audio</div>
 
     <div id="startOverlay" class="start-overlay">
-      <button id="startButton" class="start-button">Start Video</button>
+      <button id="startButton" class="start-button" type="button">Start Video</button>
     </div>
   </main>
 
@@ -179,12 +179,11 @@
 
     // Adjust these to control when the file icon approaches the viewer.
     // 0.0 = start of video, 1.0 = end of video.
-   const appearStart = 0.0;
+    const appearStart = 0.0;
     const fullyVisibleAt = 1.0;
 
     // Tuned specifically for the supplied PNG.
     // Starts microscopic and slowly approaches the viewer.
-    const finalScale = 3.2;er.
     const finalScale = 3.2;
 
     function clamp(value, min, max) {
@@ -202,13 +201,15 @@
       );
 
       // Use a slower easing curve so the icon starts extremely small,
-      // then creeps forward before becoming verconst eased = Math.pow(entranceProgress, 4.2);ath.pow(const startScale = 0.0008;
+      // then creeps forward before becoming very large near the viewer.
+      const eased = Math.pow(entranceProgress, 4.2);
+
       const startScale = 0.0008;
       const scale = startScale + eased * (finalScale - startScale);
       const opacity = clamp(entranceProgress * 2.2, 0, 1);
 
       downloadIcon.style.opacity = opacity;
-      downloadIcon.style.transform = `translate(-50%, -50%) scale(${
+      downloadIcon.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
       if (progress >= fullyVisibleAt) {
         downloadText.classList.add("visible");
@@ -229,15 +230,35 @@
 
     video.addEventListener("ended", () => {
       // Keep the icon fully visible once the video ends.
-      downloadIcon.sdownloadIcon.style.transform = `translate(-50%, -50%) scale(${finalScale})`;= "auto";
+      downloadIcon.style.opacity = 1;
+      downloadIcon.style.transform = `translate(-50%, -50%) scale(${finalScale})`;
+      downloadIcon.style.pointerEvents = "auto";
       downloadText.classList.add("visible");
     });
 
     // Browsers usually block autoplay with sound, so the user must start it.
-    startButton.addEventListener("click", () => {
-      video.muted = false;
-      video.volume = 1;
-      video.play();
+    startButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      try {
+        video.muted = false;
+        video.volume = 1;
+
+        // Make sure the video is ready to begin from the start.
+        if (video.currentTime > 0 || video.ended) {
+          video.currentTime = 0;
+        }
+
+        await video.play();
+        startOverlay.style.display = "none";
+        fallbackMessage.style.display = "none";
+        requestAnimationFrame(updateIconFromVideoProgress);
+      } catch (error) {
+        fallbackMessage.style.display = "block";
+        fallbackMessage.textContent = "Video could not start. Check that krab.mp4 is in the same folder.";
+        console.error("Video failed to play:", error);
+      }
     });
   </script>
 </body>
