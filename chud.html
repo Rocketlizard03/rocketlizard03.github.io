@@ -132,6 +132,32 @@
       font-size: 0.9rem;
       display: none;
     }
+
+    .start-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .start-button {
+      padding: 16px 28px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #111;
+      background: white;
+      border: 3px solid #111;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .start-button:hover {
+      transform: scale(1.04);
+    }
   </style>
 </head>
 <body>
@@ -141,7 +167,6 @@
       id="backgroundVideo"
       class="background-video"
       src="krab.mp4"
-      autoplay
       controls
       playsinline
     ></video>
@@ -162,7 +187,11 @@
     </a>
 
     <div id="downloadText" class="download-text">Click to continue</div>
-    <div id="fallbackMessage" class="fallback-message">Click anywhere to start the video</div>
+    <div id="fallbackMessage" class="fallback-message">Click Start to play with audio</div>
+
+    <div id="startOverlay" class="start-overlay">
+      <button id="startButton" class="start-button">Start Video</button>
+    </div>
   </main>
 
   <script>
@@ -170,6 +199,8 @@
     const downloadIcon = document.getElementById("downloadIcon");
     const downloadText = document.getElementById("downloadText");
     const fallbackMessage = document.getElementById("fallbackMessage");
+    const startOverlay = document.getElementById("startOverlay");
+    const startButton = document.getElementById("startButton");
 
     // Adjust these to control when the file icon approaches the viewer.
     // 0.0 = start of video, 1.0 = end of video.
@@ -217,6 +248,7 @@
 
     video.addEventListener("play", () => {
       fallbackMessage.style.display = "none";
+      startOverlay.style.display = "none";
       requestAnimationFrame(updateIconFromVideoProgress);
     });
 
@@ -228,16 +260,11 @@
       downloadText.classList.add("visible");
     });
 
-    // Browser autoplay fallback.
-    video.play().catch(() => {
-      fallbackMessage.style.display = "block";
-      document.body.addEventListener(
-        "click",
-        () => {
-          video.play();
-        },
-        { once: true }
-      );
+    // Browsers usually block autoplay with sound, so the user must start it.
+    startButton.addEventListener("click", () => {
+      video.muted = false;
+      video.volume = 1;
+      video.play();
     });
   </script>
 </body>
