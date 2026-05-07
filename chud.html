@@ -208,10 +208,10 @@
     // Adjust these to control when the file icon approaches the viewer.
     // 0.0 = start of video, 1.0 = end of video.
     const appearStart = 0.02;
-    const fullyVisibleAt = 0.96;
+    const fullyVisibleAt = 1.0;
 
     // Final size. Increase this if it still feels smaller than the sandwich.
-    const finalScale = 4.5;
+    const finalScale = 3.5;
 
     function clamp(value, min, max) {
       return Math.min(Math.max(value, min), max);
@@ -229,7 +229,7 @@
 
       // Use a slower easing curve so the icon starts extremely small,
       // then creeps forward before becoming very large near the viewer.
-      const eased = Math.pow(entranceProgress, 2.0);
+      const eased = Math.pow(entranceProgress, 3.5);
 
       const startScale = 0.01;
       const scale = startScale + eased * (finalScale - startScale);
