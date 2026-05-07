@@ -25,6 +25,7 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+      perspective: 900px;
     }
 
     .background-video {
@@ -51,7 +52,7 @@
       z-index: 2;
       width: 120px;
       height: 140px;
-      transform: translate(-50%, -50%) scale(0.35);
+      transform: translate(-50%, -50%) translateZ(-1400px) scale(0.08);
       opacity: 0;
       text-decoration: none;
       color: #111;
@@ -141,13 +142,11 @@
       class="background-video"
       src="krab.mp4"
       autoplay
-      muted
       playsinline
     ></video>
 
     <div class="dark-overlay"></div>
 
-   
     <!-- Replace destination.html with the page or URL you want users to visit. -->
     <a
       id="downloadIcon"
@@ -161,7 +160,7 @@
       </div>
     </a>
 
-    <div id="downloadText" class="download-text">Click to download</div>
+    <div id="downloadText" class="download-text">Click to continue</div>
     <div id="fallbackMessage" class="fallback-message">Click anywhere to start the video</div>
   </main>
 
@@ -190,16 +189,17 @@
         1
       );
 
-      // Smooth the movement slightly.
+      // Smooth the movement so it feels like it is approaching from far away.
       const eased = 1 - Math.pow(1 - entranceProgress, 3);
 
-      // The icon starts small/lower and draws into the final position.
-      const scale = 0.35 + eased * 0.65;
-      const verticalOffset = 180 - eased * 180;
-      const opacity = eased;
+      // The icon begins tiny in the center, far back in 3D space,
+      // then slowly moves toward the viewer until it reaches full size.
+      const scale = 0.08 + eased * 0.92;
+      const depth = -1400 + eased * 1400;
+      const opacity = clamp(entranceProgress * 1.4, 0, 1);
 
       downloadIcon.style.opacity = opacity;
-      downloadIcon.style.transform = `translate(-50%, calc(-50% + ${verticalOffset}px)) scale(${scale})`;
+      downloadIcon.style.transform = `translate(-50%, -50%) translateZ(${depth}px) scale(${scale})`;
 
       if (progress >= fullyVisibleAt) {
         downloadText.classList.add("visible");
