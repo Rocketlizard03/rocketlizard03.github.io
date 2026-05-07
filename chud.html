@@ -48,7 +48,7 @@
     .download-icon {
       position: absolute;
       left: 50%;
-      top: 58%;
+      top: 50%;
       z-index: 2;
       width: 120px;
       height: 140px;
@@ -103,7 +103,7 @@
     .download-text {
       position: absolute;
       left: 50%;
-      top: calc(58% + 95px);
+      top: calc(50% + 95px);
       z-index: 3;
       transform: translateX(-50%);
       color: white;
@@ -181,9 +181,12 @@
       aria-label="Open linked file"
       title="Open File"
     >
-      <div class="file-shape">
-        <span class="zip-label">FILE</span>
-      </div>
+      <!-- Replace fileicon.png with your own PNG file. -->
+      <img
+        class="file-image"
+        src="images/chud-logo.png"
+        alt="File Icon"
+      />
     </a>
 
     <div id="downloadText" class="download-text">Click to continue</div>
