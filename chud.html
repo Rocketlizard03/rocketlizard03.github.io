@@ -135,63 +135,65 @@
 </head>
 <body>
   <main class="page">
-    <!-- Replace VIDEO_ID with your YouTube video ID. -->
-    <iframe
+    <!-- Replace video.mp4 with your actual video file path. -->
+    <video
       id="backgroundVideo"
       class="background-video"
-      src="https://www.youtube.com/watch?v=E-xhxS581Uc"
-      title="Background Video"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-    ></iframe>
+      src="krab.mp4"
+      autoplay
+      muted
+      playsinline
+    ></video>
 
     <div class="dark-overlay"></div>
 
-   <div class="dark-overlay"></div>
-
-    <!-- Replace destination.html with the link viewers should visit after the animation finishes. -->
+    <!-- Replace download.zip with your actual zip file path. -->
     <a
       id="downloadIcon"
       class="download-icon"
-      href="destination.html"
-      aria-label="Open linked file"
-      title="Open File"
+      href="download.zip"
+      download
+      aria-label="Download ZIP file"
+      title="Download ZIP"
     >
       <div class="file-shape">
-        <span class="zip-label">FILE</span>
+        <span class="zip-label">ZIP</span>
       </div>
     </a>
 
-    <div id="downloadText" class="download-text">Click to continue</div>
+    <div id="downloadText" class="download-text">Click to download</div>
     <div id="fallbackMessage" class="fallback-message">Click anywhere to start the video</div>
   </main>
 
   <script>
+    const video = document.getElementById("backgroundVideo");
     const downloadIcon = document.getElementById("downloadIcon");
     const downloadText = document.getElementById("downloadText");
+    const fallbackMessage = document.getElementById("fallbackMessage");
 
-    // Total animation length is 36 seconds.
-    // The file icon slowly comes into view over the whole animation.
-    const totalVideoLength = 36000;
-    const revealStart = 0;
-    const revealDuration = totalVideoLength;
+    // Adjust these to control when the file icon appears.
+    // 0.0 = start of video, 1.0 = end of video.
+    const appearStart = 0.38;
+    const fullyVisibleAt = 0.72;
 
-    let startTime = null;
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
 
-    function animateIcon(timestamp) {
-      if (!startTime) {
-        startTime = timestamp;
-      }
+    function updateIconFromVideoProgress() {
+      if (!video.duration || Number.isNaN(video.duration)) return;
 
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(
-        Math.max((elapsed - revealStart) / revealDuration, 0),
+      const progress = video.currentTime / video.duration;
+      const entranceProgress = clamp(
+        (progress - appearStart) / (fullyVisibleAt - appearStart),
+        0,
         1
       );
 
-      const eased = 1 - Math.pow(1 - progress, 3);
+      // Smooth the movement slightly.
+      const eased = 1 - Math.pow(1 - entranceProgress, 3);
 
+      // The icon starts small/lower and draws into the final position.
       const scale = 0.35 + eased * 0.65;
       const verticalOffset = 180 - eased * 180;
       const opacity = eased;
@@ -199,17 +201,41 @@
       downloadIcon.style.opacity = opacity;
       downloadIcon.style.transform = `translate(-50%, calc(-50% + ${verticalOffset}px)) scale(${scale})`;
 
-      if (progress >= 1) {
+      if (progress >= fullyVisibleAt) {
         downloadText.classList.add("visible");
         downloadIcon.style.pointerEvents = "auto";
-        return;
+      } else {
+        downloadText.classList.remove("visible");
+        downloadIcon.style.pointerEvents = "none";
       }
 
-      downloadText.classList.remove("visible");
-      downloadIcon.style.pointerEvents = "none";
-      requestAnimationFrame(animateIcon);
+      requestAnimationFrame(updateIconFromVideoProgress);
     }
 
-    requestAnimationFrame(animateIcon);
+    video.addEventListener("play", () => {
+      fallbackMessage.style.display = "none";
+      requestAnimationFrame(updateIconFromVideoProgress);
+    });
+
+    video.addEventListener("ended", () => {
+      // Keep the icon fully visible once the video ends.
+      downloadIcon.style.opacity = 1;
+      downloadIcon.style.transform = "translate(-50%, -50%) scale(1)";
+      downloadIcon.style.pointerEvents = "auto";
+      downloadText.classList.add("visible");
+    });
+
+    // Browser autoplay fallback.
+    video.play().catch(() => {
+      fallbackMessage.style.display = "block";
+      document.body.addEventListener(
+        "click",
+        () => {
+          video.play();
+        },
+        { once: true }
+      );
+    });
   </script>
 </body>
+</html>
