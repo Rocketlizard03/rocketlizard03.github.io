@@ -142,7 +142,6 @@
   playsinline
 >
   <source src="krab.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
 
     <div class="dark-overlay"></div>
@@ -178,6 +177,18 @@
     const fallbackMessage = document.getElementById("fallbackMessage");
     const startOverlay = document.getElementById("startOverlay");
     const startButton = document.getElementById("startButton");
+    video.addEventListener("loadedmetadata", () => {
+  console.log("Video metadata loaded");
+  console.log("Duration:", video.duration);
+});
+
+video.addEventListener("canplay", () => {
+  console.log("Video can play");
+});
+
+video.addEventListener("error", () => {
+  console.error("Video load error:", video.error);
+});
 
     // Adjust these to control when the file icon approaches the viewer.
     // 0.0 = start of video, 1.0 = end of video.
@@ -239,37 +250,34 @@
     });
 
     // Browsers usually block autoplay with sound, so the user must start it.
-  startButton.addEventListener("click", async (event) => {
-  event.preventDefault();
-  event.stopPropagation();
+ startButton.addEventListener("click", () => {
+  console.log("Start button clicked");
 
-  try {
-    video.muted = false;
-    video.volume = 1;
+  video.muted = false;
+  video.volume = 1;
 
-    video.load();
+  const playPromise = video.play();
 
-    video.currentTime = 0;
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        console.log("Video started successfully");
 
-    await video.play();
+        startOverlay.style.display = "none";
+        fallbackMessage.style.display = "none";
 
-    startOverlay.style.display = "none";
-    fallbackMessage.style.display = "none";
-    requestAnimationFrame(updateIconFromVideoProgress);
-  } catch (error) {
-    fallbackMessage.style.display = "block";
+        requestAnimationFrame(updateIconFromVideoProgress);
+      })
+      .catch((error) => {
+        console.error("Video failed to play:", error);
+        console.error("Video error object:", video.error);
 
-    if (video.error) {
-      fallbackMessage.textContent =
-        "Video failed to load or play. Check the filename, folder location, or video encoding.";
-      console.error("Video error code:", video.error.code, video.error);
-    } else {
-      fallbackMessage.textContent =
-        "Video could not start. Check that krab.mp4 is in the same folder.";
-    }
-
-    console.error("Video failed to play:", error);
+        fallbackMessage.style.display = "block";
+        fallbackMessage.textContent =
+          "Video failed to play. Open the console for the exact error.";
+      });
   }
+});
 });
     });
   </script>
